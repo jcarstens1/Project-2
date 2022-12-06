@@ -3,10 +3,10 @@ import random
 
 pygame.init()
 
-WIDTH, HEIGHT = 595, 595
+WIDTH, HEIGHT = 578, 578
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Project 2 - Snake")
-FPS = 4
+FPS = 7
 GRAY = (100, 100, 100)
 BLACK = (0, 0, 0)
 COLOR = (100,100,0)
@@ -23,9 +23,8 @@ def handle_snake(snake_direction, snake_head):
         snake_head[0] += 1
 
 
-def draw_window(snake_head, snake_list, fruit_location):
+def draw_window(block_size, snake_head, snake_list, fruit_location):
     WIN.fill(GRAY)
-    block_size = 35
     for x in range(0, WIDTH, block_size):
         for y in range(0, HEIGHT, block_size):
             rect = pygame.Rect(x, y, block_size, block_size)
@@ -47,9 +46,10 @@ def draw_window(snake_head, snake_list, fruit_location):
 
 
 def main():
+    block_size = 34
     snake_head = [8, 8]
     snake_list = [[8, 8], [7, 8], [7, 8]]
-    fruit_location = [random.randrange(1, 17), random.randrange(1, 17)]
+    fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
     snake_direction = "right"
     clock = pygame.time.Clock()
     run = True
@@ -68,11 +68,19 @@ def main():
                 if event.key == pygame.K_RIGHT and snake_direction != "left":
                     snake_direction = "right"
 
+        if snake_head[0] * block_size >= WIDTH:
+            run = False
+        if snake_head[0] * block_size < 0:
+            run = False
+        if snake_head[1] * block_size >= HEIGHT:
+            run = False
+        if snake_head[1] * block_size < 0:
+            run = False
+
         handle_snake(snake_direction, snake_head)
         snake_list.insert(0, list(snake_head))
         snake_list.pop()
-        draw_window(snake_head, snake_list, fruit_location)
-
+        draw_window(block_size, snake_head, snake_list, fruit_location)
 
 
 if __name__ == '__main__':
