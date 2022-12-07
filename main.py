@@ -6,10 +6,10 @@ pygame.init()
 WIDTH, HEIGHT = 578, 578
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Project 2 - Snake")
-FPS = 7
+FPS = 9
 GRAY = (100, 100, 100)
 BLACK = (0, 0, 0)
-COLOR = (100,100,0)
+RED = (200, 0, 0)
 
 
 def handle_snake(snake_direction, snake_head):
@@ -32,7 +32,7 @@ def draw_window(block_size, snake_head, snake_list, fruit_location):
 
     x, y = fruit_location
     rect = pygame.Rect(x * block_size, y * block_size, block_size, block_size)
-    pygame.draw.rect(WIN, BLACK, rect)
+    pygame.draw.rect(WIN, RED, rect)
 
     for x in snake_list:
         rect = pygame.Rect(x[0] * block_size, x[1] * block_size, block_size, block_size)
@@ -44,13 +44,18 @@ def draw_window(block_size, snake_head, snake_list, fruit_location):
 
     pygame.display.update()
 
+def fruit(snake_list):
+    while True:
+        fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
+        if fruit_location in snake_list:
+            fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
+        return fruit_location
 
 def main():
     block_size = 34
     snake_head = [8, 8]
     snake_list = [[8, 8], [7, 8], [7, 8]]
-    snake_piece = [7,8]
-    fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
+    fruit_location = fruit(snake_list)
     snake_direction = "right"
     clock = pygame.time.Clock()
     run = True
@@ -85,9 +90,9 @@ def main():
         #checks to see if snake_head is in the same location fruit_location
         #if the location matches, then a snake_piece is added and fruit is randomized again
         if (snake_head[0] * block_size == fruit_location[0] * block_size) and (snake_head[1] * block_size == fruit_location[1] * block_size):
-            snake_list.append(snake_piece)
-            fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
-        
+            snake_list.append(fruit_location)
+            fruit_location = fruit(snake_list)
+
         draw_window(block_size, snake_head, snake_list, fruit_location)
 
 
