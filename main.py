@@ -7,12 +7,20 @@ WIDTH, HEIGHT = 578, 578
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Project 2 - Snake")
 FPS = 9
+
 GRAY = (100, 100, 100)
 BLACK = (0, 0, 0)
 RED = (200, 0, 0)
 BLUE = (0, 0 , 100)
 LIGHT_BLUE = (0, 0, 50)
 
+score_font = pygame.font.SysFont('lucidasanstypewriteroblique', 20)
+
+#inputs len(snake_list) and covnerts to string
+#line 23 puts the score onto the Window
+def score(score):
+    player_score = score_font.render('Your Score: ' + str(score), True, BLUE)
+    WIN.blit(player_score, [10,10])
 
 def handle_snake(snake_direction, snake_head):
     if snake_direction == 'up':
@@ -43,6 +51,7 @@ def draw_window(block_size, snake_head, snake_list, fruit_location):
     x, y = snake_head
     rect = pygame.Rect(x * block_size, y * block_size, block_size, block_size)
     pygame.draw.rect(WIN, LIGHT_BLUE, rect)
+    score(len(snake_list) - 1)
 
     pygame.display.update()
 
@@ -56,7 +65,7 @@ def fruit(snake_list):
 def main():
     block_size = 34
     snake_head = [8, 8]
-    snake_list = [[8, 8], [7, 8], [7, 8]]
+    snake_list = [[8, 8]]
     fruit_location = fruit(snake_list)
     snake_direction = "right"
     clock = pygame.time.Clock()
@@ -94,6 +103,7 @@ def main():
         if (snake_head[0] * block_size == fruit_location[0] * block_size) and (snake_head[1] * block_size == fruit_location[1] * block_size):
             snake_list.append(fruit_location)
             fruit_location = fruit(snake_list)
+            score(len(snake_list)  -1)
 
         draw_window(block_size, snake_head, snake_list, fruit_location)
 
