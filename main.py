@@ -6,7 +6,7 @@ pygame.init()
 WIDTH, HEIGHT = 578, 578
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Project 2 - Snake")
-FPS = 9
+FPS = 8
 
 GRAY = (100, 100, 100)
 BLACK = (0, 0, 0)
@@ -19,6 +19,7 @@ score_font = pygame.font.SysFont('lucidasanstypewriteroblique', 20)
 #inputs len(snake_list) and covnerts to string
 #line 23 puts the score onto the Window
 def score(score):
+    score = score - 2
     player_score = score_font.render('Your Score: ' + str(score), True, BLUE)
     WIN.blit(player_score, [10,10])
 
@@ -65,7 +66,7 @@ def fruit(snake_list):
 def main():
     block_size = 34
     snake_head = [8, 8]
-    snake_list = [[8, 8]]
+    snake_list = [[8,8], [7,8], [6,8]]
     fruit_location = fruit(snake_list)
     snake_direction = "right"
     clock = pygame.time.Clock()
@@ -98,15 +99,19 @@ def main():
         snake_list.insert(0, list(snake_head))
         snake_list.pop()
 
+        for coord in snake_list[1:]:
+            if snake_head[0] == coord[0] and snake_head[1] == coord[1]:
+                run = False
+
         #checks to see if snake_head is in the same location fruit_location
         #if the location matches, then a snake_piece is added and fruit is randomized again
         if (snake_head[0] * block_size == fruit_location[0] * block_size) and (snake_head[1] * block_size == fruit_location[1] * block_size):
             snake_list.append(fruit_location)
             fruit_location = fruit(snake_list)
-            score(len(snake_list)  -1)
-
+        score(len(snake_list))
+        
         draw_window(block_size, snake_head, snake_list, fruit_location)
-
+        
 
 if __name__ == '__main__':
     main()
