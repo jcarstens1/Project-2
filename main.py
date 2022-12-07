@@ -45,7 +45,7 @@ def draw_window(block_size, snake_head, snake_list, fruit_location):
     rect = pygame.Rect(x * block_size, y * block_size, block_size, block_size)
     pygame.draw.rect(WIN, RED, rect)
 
-    for x in snake_list:
+    for x in snake_list[1:]:
         rect = pygame.Rect(x[0] * block_size, x[1] * block_size, block_size, block_size)
         pygame.draw.rect(WIN, BLUE, rect)
 
