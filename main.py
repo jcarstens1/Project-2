@@ -49,6 +49,7 @@ def main():
     block_size = 34
     snake_head = [8, 8]
     snake_list = [[8, 8], [7, 8], [7, 8]]
+    snake_piece = [7,8]
     fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
     snake_direction = "right"
     clock = pygame.time.Clock()
@@ -80,6 +81,13 @@ def main():
         handle_snake(snake_direction, snake_head)
         snake_list.insert(0, list(snake_head))
         snake_list.pop()
+
+        #checks to see if snake_head is in the same location fruit_location
+        #if the location matches, then a snake_piece is added and fruit is randomized again
+        if (snake_head[0] * block_size == fruit_location[0] * block_size) and (snake_head[1] * block_size == fruit_location[1] * block_size):
+            snake_list.append(snake_piece)
+            fruit_location = [random.randrange(0, 17), random.randrange(0, 17)]
+        
         draw_window(block_size, snake_head, snake_list, fruit_location)
 
 
