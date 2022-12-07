@@ -10,6 +10,8 @@ FPS = 9
 GRAY = (100, 100, 100)
 BLACK = (0, 0, 0)
 RED = (200, 0, 0)
+BLUE = (0, 0 , 100)
+LIGHT_BLUE = (0, 0, 50)
 
 
 def handle_snake(snake_direction, snake_head):
@@ -36,11 +38,11 @@ def draw_window(block_size, snake_head, snake_list, fruit_location):
 
     for x in snake_list:
         rect = pygame.Rect(x[0] * block_size, x[1] * block_size, block_size, block_size)
-        pygame.draw.rect(WIN, BLACK, rect)
+        pygame.draw.rect(WIN, BLUE, rect)
 
     x, y = snake_head
     rect = pygame.Rect(x * block_size, y * block_size, block_size, block_size)
-    pygame.draw.rect(WIN, BLACK, rect)
+    pygame.draw.rect(WIN, LIGHT_BLUE, rect)
 
     pygame.display.update()
 
